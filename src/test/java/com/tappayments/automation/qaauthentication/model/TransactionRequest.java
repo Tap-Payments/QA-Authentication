@@ -1,5 +1,8 @@
 package com.tappayments.automation.qaauthentication.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tappayments.automation.qaauthentication.model.enums.TransactionType;
+import com.tappayments.automation.qaauthentication.utils.AppConstants;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,10 +13,11 @@ import java.util.Map;
 @Builder
 public class TransactionRequest {
 
-    private double amount;
+    private Double amount;
     private String currency;
+    @JsonProperty(value = AppConstants.SAVE_CARD)
     private Boolean saveCard;
-    private String description;
+    private Object description;
     private Transaction transaction;
     private Reference reference;
     private Invoice invoice;
@@ -23,6 +27,7 @@ public class TransactionRequest {
     private Routing routing;
     private Authentication authentication;
     private Merchant merchant;
+    @JsonProperty(value = AppConstants.PAYMENT_AGREEMENT)
     private PaymentAgreement paymentAgreement;
     private Map<String, String> metadata;
     private Airline airline;
@@ -33,7 +38,7 @@ public class TransactionRequest {
     @Builder
     public static class Transaction {
         private String id;
-        private String type;
+        private TransactionType type;
     }
 
     @Data
@@ -54,6 +59,7 @@ public class TransactionRequest {
     public static class Customer {
         private String id;
         private List<Name> name;
+        @JsonProperty(value = AppConstants.NAME_ON_CARD)
         private String nameOnCard;
         private String email;
         private Phone phone;
@@ -61,8 +67,11 @@ public class TransactionRequest {
         @Data
         @Builder
         public static class Name {
+            @JsonProperty(value = AppConstants.FIRST_NAME)
             private String firstName;
+            @JsonProperty(value = AppConstants.MIDDLE_NAME)
             private String middleName;
+            @JsonProperty(value = AppConstants.LAST_NAME)
             private String lastName;
             private String locale;
         }
@@ -70,6 +79,7 @@ public class TransactionRequest {
         @Data
         @Builder
         public static class Phone {
+            @JsonProperty(value = AppConstants.COUNTRY_CODE)
             private String countryCode;
             private String number;
         }
@@ -84,13 +94,13 @@ public class TransactionRequest {
         @Data
         @Builder
         public static class BrowserDetails {
-            private int screenHeight;
-            private int screenWidth;
+            private Integer screenHeight;
+            private Integer screenWidth;
             private String language;
-            private int colorDepth;
+            private Integer colorDepth;
             private String javaEnabled;
             private String javaScriptEnabled;
-            private int timeZone;
+            private Integer timeZone;
             private String acceptHeaders;
             private String challengeWindowSize;
             private String browserUserAgent;
@@ -106,10 +116,12 @@ public class TransactionRequest {
         @Data
         @Builder
         public static class Card {
+            @JsonProperty(value = AppConstants.FIRST_SIX)
             private String firstSix;
             private String scheme;
             private String brand;
             private String category;
+            @JsonProperty(value = AppConstants.LAST_FOUR)
             private String lastFour;
             private String name;
             private Expiry expiry;
@@ -128,6 +140,7 @@ public class TransactionRequest {
     @Builder
     public static class Routing {
         private String provider;
+        @JsonProperty(value = AppConstants.TERMINAL_ID)
         private String terminalId;
     }
 
@@ -150,7 +163,9 @@ public class TransactionRequest {
         private String id;
         private String type;
         private Contract contract;
+        @JsonProperty(value = AppConstants.VARIABLE_AMOUNT)
         private VariableAmount variableAmount;
+        @JsonProperty(value = AppConstants.SCHEDULED_PAYMENT)
         private ScheduledPayments scheduledPayments;
 
         @Data
@@ -163,8 +178,11 @@ public class TransactionRequest {
             @Data
             @Builder
             public static class Period {
+                @JsonProperty(value = AppConstants.START_DATE)
                 private long startDate;
+                @JsonProperty(value = AppConstants.END_DATE)
                 private long endDate;
+                @JsonProperty(value = AppConstants.AUTO_RENEWAL)
                 private boolean autoRenewal;
             }
         }
@@ -173,6 +191,7 @@ public class TransactionRequest {
         @Builder
         public static class VariableAmount {
             private String id;
+            @JsonProperty(value = AppConstants.MAXIMUM_AMOUNT)
             private double maximumAmount;
         }
 
