@@ -1,6 +1,8 @@
 package com.tappayments.automation.qaauthentication.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tappayments.automation.qaauthentication.model.enums.AuthenticationChannel;
+import com.tappayments.automation.qaauthentication.model.enums.AuthenticationPurpose;
 import com.tappayments.automation.qaauthentication.model.enums.TransactionType;
 import com.tappayments.automation.qaauthentication.utils.AppConstants;
 import lombok.Builder;
@@ -27,8 +29,6 @@ public class TransactionRequest {
     private Routing routing;
     private Authentication authentication;
     private Merchant merchant;
-    @JsonProperty(value = AppConstants.PAYMENT_AGREEMENT)
-    private PaymentAgreement paymentAgreement;
     private Map<String, String> metadata;
     private Airline airline;
     private Redirect redirect;
@@ -147,68 +147,14 @@ public class TransactionRequest {
     @Data
     @Builder
     public static class Authentication {
-        private String channel;
-        private String purpose;
+        private AuthenticationChannel channel;
+        private AuthenticationPurpose purpose;
     }
 
     @Data
     @Builder
     public static class Merchant {
         private String id;
-    }
-
-    @Data
-    @Builder
-    public static class PaymentAgreement {
-        private String id;
-        private String type;
-        private Contract contract;
-        @JsonProperty(value = AppConstants.VARIABLE_AMOUNT)
-        private VariableAmount variableAmount;
-        @JsonProperty(value = AppConstants.SCHEDULED_PAYMENT)
-        private ScheduledPayments scheduledPayments;
-
-        @Data
-        @Builder
-        public static class Contract {
-            private String id;
-            private String type;
-            private Period period;
-
-            @Data
-            @Builder
-            public static class Period {
-                @JsonProperty(value = AppConstants.START_DATE)
-                private long startDate;
-                @JsonProperty(value = AppConstants.END_DATE)
-                private long endDate;
-                @JsonProperty(value = AppConstants.AUTO_RENEWAL)
-                private boolean autoRenewal;
-            }
-        }
-
-        @Data
-        @Builder
-        public static class VariableAmount {
-            private String id;
-            @JsonProperty(value = AppConstants.MAXIMUM_AMOUNT)
-            private double maximumAmount;
-        }
-
-        @Data
-        @Builder
-        public static class ScheduledPayments {
-            private String id;
-            private int count;
-            private Frequency frequency;
-
-            @Data
-            @Builder
-            public static class Frequency {
-                private String period;
-                private int count;
-            }
-        }
     }
 
     @Data

@@ -1,11 +1,13 @@
 package com.tappayments.automation.qaauthentication.base;
 
 import com.tappayments.automation.qaauthentication.config.ConfigManager;
+import com.tappayments.automation.config.ExtentReportManager;
 import com.tappayments.automation.qaauthentication.utils.AppConstants;
-import com.tappayments.automation.qaauthentication.utils.AppUtils;
+import com.tappayments.automation.utils.CommonAutomationUtils;
 import io.restassured.response.Response;
+import io.restassured.specification.QueryableRequestSpecification;
 import io.restassured.specification.RequestSpecification;
-import lombok.extern.slf4j.Slf4j;
+import io.restassured.specification.SpecificationQuerier;
 import org.apache.http.HttpStatus;
 
 import java.util.HashMap;
@@ -44,6 +46,9 @@ public class RestAssuredClient extends BaseTest {
                 .when()
                 .post(endPoint);
 
+        printRequestLogInReport(requestSpecification);
+        printResponseLogInReport(response);
+
         return response;
     }
 
@@ -52,7 +57,7 @@ public class RestAssuredClient extends BaseTest {
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("key", key);
 
-        String body = AppUtils.transactionRequestToJson(requestBody);
+        String body = CommonAutomationUtils.stringToJson(requestBody);
 
         RequestSpecification requestSpecification = requestSpecification(Map.of(AppConstants.CONTENT_TYPE, ConfigManager.getPropertyValue(AppConstants.CONTENT_TYPE_VALUE)));
 
@@ -64,5 +69,23 @@ public class RestAssuredClient extends BaseTest {
             return response.jsonPath().getString(AppConstants.DATA + "." + AppConstants.SESSION_TOKEN);
 
         return "";
+    }
+
+    private static void printRequestLogInReport(RequestSpecification requestSpecification){
+
+        QueryableRequestSpecification queryableRequestSpecification = SpecificationQuerier.query(requestSpecification);
+        ExtentReportManager.logInfoDetails("Endpoint is : " + queryableRequestSpecification.getURI());
+        ExtentReportManager.logInfoDetails("Method is : " + queryableRequestSpecification.getMethod());
+        ExtentReportManager.logInfoDetails("Headers are");
+        ExtentReportManager.logHeaders(queryableRequestSpecification.getHeaders().asList());
+        ExtentReportManager.logInfoDetails("Request body is: ");
+        ExtentReportManager.logJson(queryableRequestSpecification.getBody());
+    }
+
+    private static void printResponseLogInReport(Response response){
+
+        ExtentReportManager.logInfoDetails("Response status : " + response.getStatusCode());
+        ExtentReportManager.logInfoDetails("Response body is : ");
+        ExtentReportManager.logJson(response.getBody().prettyPrint());
     }
 }

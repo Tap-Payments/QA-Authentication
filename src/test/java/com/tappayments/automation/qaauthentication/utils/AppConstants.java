@@ -49,7 +49,40 @@ public class AppConstants {
     public static final String NUMBER = "number";
     public static final String DEVICE = "device";
     public static final String IP_ADDRESS = "ipaddress";
-
+    public static final String UTF_8 = "utf-8";
+    public static final String SOURCE = "source";
+    public static final String CARD = "card";
+    public static final String SCHEME = "scheme";
+    public static final String BRAND = "brand";
+    public static final String CATEGORY = "category";
+    public static final String EXPIRY = "expiry";
+    public static final String MONTH = "month";
+    public static final String YEAR = "year";
+    public static final String FUNDING = "funding";
+    public static final String ROUTING = "routing";
+    public static final String PROVIDER = "provider";
+    public static final String AUTHENTICATION = "authentication";
+    public static final String CHANNEL = "channel";
+    public static final String PURPOSE = "purpose";
+    public static final String URL = "url";
+    public static final String MERCHANT = "merchant";
+    public static final String META_DATA = "metadata";
+    public static final String UDF1 = "udf1";
+    public static final String UDF2 = "udf2";
+    public static final String AIRLINE = "airline";
+    public static final String REDIRECT = "redirect";
+    public static final String POST = "post";
+    public static final String BROWSER_DETAIL = "browserDetails";
+    public static final String SCREEN_HEIGHT = "screenHeight";
+    public static final String SCREEN_WIDTH = "screenWidth";
+    public static final String LANGUAGE = "language";
+    public static final String COLOR_DEPTH = "colorDepth";
+    public static final String JAVA_ENABLED = "javaEnabled";
+    public static final String JAVASCRIPT_ENABLED = "javaScriptEnabled";
+    public static final String TIMEZONE = "timeZone";
+    public static final String ACCEPT_HEADER = "acceptHeaders";
+    public static final String CHALLENGE_WINDOW_SIZE = "3DSecureChallengeWindowSize";
+    public static final String BROWSER_USER_AGENT = "browserUserAgent";
 
     public static final String ERRORS_CODE = "errors[0].code";
     public static final String ERRORS_ERROR = "errors[0].error";
@@ -64,4 +97,11 @@ public class AppConstants {
     public static final String UNACCEPTED_JSON_REQUEST_ERROR = "Invalid_json_request";
     public static final String REQUIRED_FIELD_INVALID_CODE = "7001";
     public static final String REQUIRED_FIELD_INVALID_ERROR = "Required_fields_missing";
+    public static final String INVALID_TOKEN_ID_CODE = "1222";
+    public static final String INVALID_TOKEN_ID_DESCRIPTION = "Error from gateway processor. Invalid token id/Unable to fetch card details";
+    public static final String INVALID_EMPTY_TOKEN_ID_CODE = "1223";
+    public static final String INVALID_EMPTY_TOKEN_ID_DESCRIPTION = "Error from gateway processor. Gateway Response is Empty";
+    public static final String ROUTING_DETAIL_NOT_FOUND_CODE = "1174";
+    public static final String ROUTING_DETAIL_NOT_FOUND_ERROR = "Routing_details_not_found";
+    public static final String INVALID_MERCHANT_REDIRECT_URL_ERROR = "400 BAD_REQUEST";
 }
