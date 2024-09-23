@@ -2,8 +2,12 @@ package com.tappayments.automation.qaauthentication.base;
 
 import com.tappayments.automation.qaauthentication.config.ConfigManager;
 import com.tappayments.automation.config.ExtentReportManager;
+import com.tappayments.automation.qaauthentication.model.CardRequest;
 import com.tappayments.automation.qaauthentication.utils.AppConstants;
+import com.tappayments.automation.qaauthentication.utils.AppUtils;
 import com.tappayments.automation.utils.CommonAutomationUtils;
+import io.restassured.http.Header;
+import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import io.restassured.specification.QueryableRequestSpecification;
 import io.restassured.specification.RequestSpecification;
@@ -87,5 +91,35 @@ public class RestAssuredClient extends BaseTest {
         ExtentReportManager.logInfoDetails("Response status : " + response.getStatusCode());
         ExtentReportManager.logInfoDetails("Response body is : ");
         ExtentReportManager.logJson(response.getBody().prettyPrint());
+    }
+
+    public static String generateCardDetailToken(){
+
+        CardRequest cardRequest = AppUtils.createCardRequest();
+        String body = CommonAutomationUtils.stringToJson(cardRequest);
+
+        RequestSpecification requestSpecification = requestSpecification(
+                Map.of(
+                        AppConstants.CONTENT_TYPE, ConfigManager.getPropertyValue(AppConstants.CONTENT_TYPE_VALUE),
+                        AppConstants.AUTHORIZATION, AppConstants.BEARER + ConfigManager.getPropertyValue(AppConstants.AUTHORIZATION_VALUE)
+                )
+        );
+
+        Response response = requestSpecification.body(body)
+                .when()
+                .post(ConfigManager.getPropertyValue(AppConstants.CARD_DETAIL_TOKEN_URI));
+
+        if(response.getStatusCode() == HttpStatus.SC_OK)
+            return response.jsonPath().getString(AppConstants.ID);
+
+        System.out.println("Adding delay of 5 seconds before retrying");
+        try {
+            Thread.sleep(5000);  // Adding a delay before retrying (optional)
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();  // Handle interruption during sleep
+        }
+
+        System.out.println("Retrying the request");
+        return generateCardDetailToken();  // Retry the request
     }
 }

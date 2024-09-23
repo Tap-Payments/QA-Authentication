@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite">
+<suite name="All Test Suite" parallel="false">
     <listeners>
-        <listener class-name="com.tappayments.automation.config.ExtentReportSetup"></listener>
+        <listener class-name="com.tappayments.automation.config.ExtentReportSetup"/>
     </listeners>
-    <test name="QA Authentication Cases" verbose="2" preserve-order="true">
+
+    <!-- Test Suite for Internal Authentication -->
+    <test name="QA Authentication Cases - Internal Auth" verbose="2" preserve-order="true">
+        <parameter name="isExternalAuth" value="false"/>
         <classes>
-            <class name="com.tappayments.automation.qaauthentication.cases.CreateTransactionAuthenticationCases"/>
+<!--            <class name="com.tappayments.automation.qaauthentication.cases.CreateTransactionAuthenticationCases"/>-->
+            <class name="com.tappayments.automation.qaauthentication.cases.CreateTransactionAuthenticationInternalCases"/>
         </classes>
     </test>
-</suite>
 
+    <!-- Test Suite for External Authentication -->
+<!--    <test name="QA Authentication Cases - External Auth" verbose="2" preserve-order="true">-->
+<!--        <parameter name="isExternalAuth" value="true"/>-->
+<!--        <classes>-->
+<!--            <class name="com.tappayments.automation.qaauthentication.cases.CreateTransactionAuthenticationCases"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+</suite>

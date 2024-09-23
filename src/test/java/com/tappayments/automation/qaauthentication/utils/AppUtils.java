@@ -1,9 +1,13 @@
 package com.tappayments.automation.qaauthentication.utils;
 
+import com.tappayments.automation.qaauthentication.config.ConfigManager;
+import com.tappayments.automation.qaauthentication.model.CardRequest;
 import com.tappayments.automation.qaauthentication.model.TransactionRequest;
 import com.tappayments.automation.qaauthentication.model.enums.AuthenticationChannel;
 import com.tappayments.automation.qaauthentication.model.enums.AuthenticationPurpose;
 import com.tappayments.automation.qaauthentication.model.enums.TransactionType;
+import com.tappayments.automation.qaauthentication.requests.AuthenticationTransactionRequest;
+import com.tappayments.automation.utils.CommonAutomationUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -83,7 +87,7 @@ public class AppUtils {
                         .purpose(AuthenticationPurpose.PAYMENT_TRANSACTION)
                         .build())
                 .merchant(TransactionRequest.Merchant.builder()
-                        .id("merchant_xxxxxx")
+                        .id("1124340")
                         .build())
                 .metadata(Map.of("udf1", "test1", "udf2", "test2"))
                 .airline(TransactionRequest.Airline.builder()
@@ -97,5 +101,40 @@ public class AppUtils {
                         .build())
                 .build();
 
+    }
+
+    public static CardRequest createCardRequest() {
+
+        return CardRequest.builder()
+                .card(CardRequest.Card.builder()
+                        .number(4508750015741019L)
+                        .exp_month(1)
+                        .exp_year(2039)
+                        .cvc(100)
+                        .name("Osama Rabie")
+                        .address(CardRequest.Card.Address.builder()
+                                .country("Kuwait")
+                                .line1("Salmiya, 21")
+                                .city("Kuwait city")
+                                .street("Salim")
+                                .avenue("Gulf")
+                                .build())
+                        .build())
+                .client_ip("192.168.1.20")
+                .build();
+    }
+
+    public static void updateSourceAndMerchantIdForExternal(TransactionRequest transactionRequest){
+
+        transactionRequest.getSource().setId(AuthenticationTransactionRequest.generateCardDetailToken());
+        if(transactionRequest.getMerchant() != null)
+            transactionRequest.getMerchant().setId(ConfigManager.getPropertyValue(AppConstants.MERCHANT_ID_VALUE));
+    }
+
+    public static String removeCardAndRoutingFromRequest(String body){
+
+        body = CommonAutomationUtils.modifyJson(body, "DELETE", "source.card", null);
+        body = CommonAutomationUtils.modifyJson(body, "DELETE", "routing", null);
+        return body;
     }
 }
