@@ -15,7 +15,9 @@ public class AppConstants {
     public static final String INTERNAL_END_POINT = "/internal";
     public static final String BEARER = "Bearer ";
     public static final String SESSION_TOKEN_URI = "sessionTokenUrl";
-    public static final String CARD_DETAIL_TOKEN_URI = "cardDetailTokenUrl";
+    public static final String TAP_BASE_URI = "tapBaseUrl";
+    public static final String CARD_DETAIL_TOKEN_URI = "/tokens";
+    public static final String CHARGE_URI = "/charges";
     public static final String DATA = "data";
     public static final String SAVE_CARD = "save_card";
     public static final String PAYMENT_AGREEMENT = "payment_agreement";

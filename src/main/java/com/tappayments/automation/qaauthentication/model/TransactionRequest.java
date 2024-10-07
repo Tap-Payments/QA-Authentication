@@ -7,33 +7,23 @@ import com.tappayments.automation.qaauthentication.model.enums.TransactionType;
 import com.tappayments.automation.qaauthentication.utils.AppConstants;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 import java.util.Map;
 
 @Data
-@Builder
-public class TransactionRequest {
+@SuperBuilder
+public class TransactionRequest extends TransactionAuthentication {
 
-    private Double amount;
-    private String currency;
-    @JsonProperty(value = AppConstants.SAVE_CARD)
-    private Boolean saveCard;
-    private Object description;
     private Transaction transaction;
-    private Reference reference;
     private Invoice invoice;
-    private Customer customer;
     private Device device;
     private Source source;
     private Routing routing;
     private Authentication authentication;
-    private Merchant merchant;
-    private Map<String, String> metadata;
     private Airline airline;
-    private Redirect redirect;
-    private Post post;
-    
+
     @Data
     @Builder
     public static class Transaction {
@@ -41,48 +31,11 @@ public class TransactionRequest {
         private TransactionType type;
     }
 
-    @Data
-    @Builder
-    public static class Reference {
-        private String transaction;
-        private String order;
-    }
 
     @Data
     @Builder
     public static class Invoice {
         private String id;
-    }
-
-    @Data
-    @Builder
-    public static class Customer {
-        private String id;
-        private List<Name> name;
-        @JsonProperty(value = AppConstants.NAME_ON_CARD)
-        private String nameOnCard;
-        private String email;
-        private Phone phone;
-
-        @Data
-        @Builder
-        public static class Name {
-            @JsonProperty(value = AppConstants.FIRST_NAME)
-            private String firstName;
-            @JsonProperty(value = AppConstants.MIDDLE_NAME)
-            private String middleName;
-            @JsonProperty(value = AppConstants.LAST_NAME)
-            private String lastName;
-            private String locale;
-        }
-
-        @Data
-        @Builder
-        public static class Phone {
-            @JsonProperty(value = AppConstants.COUNTRY_CODE)
-            private String countryCode;
-            private String number;
-        }
     }
 
     @Data
@@ -153,26 +106,8 @@ public class TransactionRequest {
 
     @Data
     @Builder
-    public static class Merchant {
-        private String id;
-    }
-
-    @Data
-    @Builder
     public static class Airline {
         private String id;
-    }
-
-    @Data
-    @Builder
-    public static class Redirect {
-        private String url;
-    }
-
-    @Data
-    @Builder
-    public static class Post {
-        private String url;
     }
 
 }

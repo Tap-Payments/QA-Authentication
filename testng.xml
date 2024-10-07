@@ -9,7 +9,7 @@
     <test name="QA Authentication Cases - Internal Auth" verbose="2" preserve-order="true">
         <parameter name="isExternalAuth" value="false"/>
         <classes>
-<!--            <class name="com.tappayments.automation.qaauthentication.cases.CreateTransactionAuthenticationCases"/>-->
+            <class name="com.tappayments.automation.qaauthentication.cases.CreateTransactionAuthenticationCases"/>
             <class name="com.tappayments.automation.qaauthentication.cases.CreateTransactionAuthenticationInternalCases"/>
         </classes>
     </test>

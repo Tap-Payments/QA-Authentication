@@ -1,6 +1,7 @@
 package com.tappayments.automation.qaauthentication.cases;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.tappayments.automation.qaauthentication.base.BaseTest;
 import com.tappayments.automation.qaauthentication.model.TransactionRequest;
 import com.tappayments.automation.qaauthentication.requests.AuthenticationTransactionRequest;
 import com.tappayments.automation.qaauthentication.utils.AppConstants;
@@ -10,7 +11,6 @@ import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
-import java.util.List;
 import java.util.Map;
 
 public class CreateTransactionAuthenticationInternalCases {
@@ -39,73 +39,73 @@ public class CreateTransactionAuthenticationInternalCases {
 
         CommonAutomationUtils.verifyCommonResponseSuccessValidation(response, HttpStatus.SC_OK, Map.of(AppConstants.SOURCE + "." + AppConstants.ID, transactionRequest.getSource().getId()));
     }
-//
-//    @Test(groups = {"MC:Authentication", "Abdul Rehman", "SECTION:Source Id Validation", "SC:Source Id"}, description = "Validates transaction authentication with a null source ID", priority = 142)
-//    public void transactionAuthenticationNullSourceIdCase() {
-//
-//        TransactionRequest transactionRequest = AppUtils.transactionRequestInstance();
-//        transactionRequest.getSource().setId(null);
-//
-//        String body = CommonAutomationUtils.stringToJson(transactionRequest);
-//        Response response = AuthenticationTransactionRequest.postRequest(body, AppConstants.INTERNAL_END_POINT);
-//        String textResponse = response.getBody().asString();
-//        JsonNode jsonResponse = CommonAutomationUtils.convertToJson(textResponse);
-//
-//        CommonAutomationUtils.verifyCommonResponseFailedValidation(jsonResponse, response.getStatusCode(), HttpStatus.SC_BAD_REQUEST, AppConstants.REQUIRED_FIELD_INVALID_CODE, AppConstants.REQUIRED_FIELD_INVALID_ERROR);
-//    }
-//
-//    @Test(groups = {"MC:Authentication", "Abdul Rehman", "SECTION:Source Id Validation", "SC:Source Id"}, description = "Validates transaction authentication with an empty source ID", priority = 143)
-//    public void transactionAuthenticationEmptySourceIdCase() {
-//
-//        TransactionRequest transactionRequest = AppUtils.transactionRequestInstance();
-//
-//        String body = CommonAutomationUtils.stringToJson(transactionRequest);
-//        String updatedBody = CommonAutomationUtils.modifyJson(body, "MODIFY", "source.id", "");
-//        Response response = AuthenticationTransactionRequest.postRequest(updatedBody, AppConstants.INTERNAL_END_POINT);
-//        String textResponse = response.getBody().asString();
-//        JsonNode jsonResponse = CommonAutomationUtils.convertToJson(textResponse);
-//
-//        CommonAutomationUtils.verifyCommonResponseFailedDescriptionValidation(jsonResponse, response.getStatusCode(), HttpStatus.SC_BAD_REQUEST, AppConstants.INVALID_EMPTY_TOKEN_ID_CODE, AppConstants.INVALID_EMPTY_TOKEN_ID_DESCRIPTION);
-//    }
-//
-//    @Test(groups = {"MC:Authentication", "Abdul Rehman", "SECTION:Source Id Validation", "SC:Source Id"}, description = "Validates transaction authentication with an invalid source ID", priority = 144)
-//    public void transactionAuthenticationInvalidSourceIdCase() {
-//
-//        TransactionRequest transactionRequest = AppUtils.transactionRequestInstance();
-//        transactionRequest.getSource().setId("invalid_source_id");
-//
-//        String body = CommonAutomationUtils.stringToJson(transactionRequest);
-//        Response response = AuthenticationTransactionRequest.postRequest(body, AppConstants.INTERNAL_END_POINT);
-//        String textResponse = response.getBody().asString();
-//        JsonNode jsonResponse = CommonAutomationUtils.convertToJson(textResponse);
-//
-//        CommonAutomationUtils.verifyCommonResponseFailedDescriptionValidation(jsonResponse, response.getStatusCode(), HttpStatus.SC_BAD_REQUEST, AppConstants.INVALID_TOKEN_ID_CODE, AppConstants.INVALID_TOKEN_ID_DESCRIPTION);
-//    }
-//
-//    @Test(groups = {"MC:Authentication", "Abdul Rehman", "SECTION:Source Card First Six Validation", "SC:Source Card First Six"}, description = "Validates transaction authentication with a valid source card first six digits", priority = 145)
-//    public void transactionAuthenticationValidSourceCardFirstSixCase() {
-//
-//        TransactionRequest transactionRequest = AppUtils.transactionRequestInstance();
-//        transactionRequest.getSource().getCard().setFirstSix("484783");
-//
-//        String body = CommonAutomationUtils.stringToJson(transactionRequest);
-//        Response response = AuthenticationTransactionRequest.postRequest(body, AppConstants.INTERNAL_END_POINT);
-//
-//        CommonAutomationUtils.verifyCommonResponseSuccessValidation(response, HttpStatus.SC_OK, Map.of(AppConstants.CARD + "." + AppConstants.FIRST_SIX, "484783"));
-//    }
-//
-//    @Test(groups = {"MC:Authentication", "Abdul Rehman", "SECTION:Source Card First Six Validation", "SC:Source Card First Six"}, description = "Validates transaction authentication with less than six digits in source card first six", priority = 146)
-//    public void transactionAuthenticationLessSixDigitSourceCardFirstSixCase() {
-//
-//        TransactionRequest transactionRequest = AppUtils.transactionRequestInstance();
-//        transactionRequest.getSource().getCard().setFirstSix("4847");
-//
-//        String body = CommonAutomationUtils.stringToJson(transactionRequest);
-//        Response response = AuthenticationTransactionRequest.postRequest(body, AppConstants.INTERNAL_END_POINT);
-//
-//        CommonAutomationUtils.verifyCommonResponseSuccessValidation(response, HttpStatus.SC_OK, Map.of(AppConstants.CARD + "." + AppConstants.FIRST_SIX, "4847"));
-//    }
-//
+
+    @Test(groups = {"MC:Authentication", "Abdul Rehman", "SECTION:Source Id Validation", "SC:Source Id"}, description = "Validates transaction authentication with a null source ID", priority = 142)
+    public void transactionAuthenticationNullSourceIdCase() {
+
+        TransactionRequest transactionRequest = AppUtils.transactionRequestInstance();
+        transactionRequest.getSource().setId(null);
+
+        String body = CommonAutomationUtils.stringToJson(transactionRequest);
+        Response response = AuthenticationTransactionRequest.postRequest(body, AppConstants.INTERNAL_END_POINT);
+        String textResponse = response.getBody().asString();
+        JsonNode jsonResponse = CommonAutomationUtils.convertToJson(textResponse);
+
+        CommonAutomationUtils.verifyCommonResponseFailedValidation(jsonResponse, response.getStatusCode(), HttpStatus.SC_BAD_REQUEST, AppConstants.REQUIRED_FIELD_INVALID_CODE, AppConstants.REQUIRED_FIELD_INVALID_ERROR);
+    }
+
+    @Test(groups = {"MC:Authentication", "Abdul Rehman", "SECTION:Source Id Validation", "SC:Source Id"}, description = "Validates transaction authentication with an empty source ID", priority = 143)
+    public void transactionAuthenticationEmptySourceIdCase() {
+
+        TransactionRequest transactionRequest = AppUtils.transactionRequestInstance();
+
+        String body = CommonAutomationUtils.stringToJson(transactionRequest);
+        String updatedBody = CommonAutomationUtils.modifyJson(body, "MODIFY", "source.id", "");
+        Response response = AuthenticationTransactionRequest.postRequest(updatedBody, AppConstants.INTERNAL_END_POINT);
+        String textResponse = response.getBody().asString();
+        JsonNode jsonResponse = CommonAutomationUtils.convertToJson(textResponse);
+
+        CommonAutomationUtils.verifyCommonResponseFailedDescriptionValidation(jsonResponse, response.getStatusCode(), HttpStatus.SC_BAD_REQUEST, AppConstants.INVALID_EMPTY_TOKEN_ID_CODE, AppConstants.INVALID_EMPTY_TOKEN_ID_DESCRIPTION);
+    }
+
+    @Test(groups = {"MC:Authentication", "Abdul Rehman", "SECTION:Source Id Validation", "SC:Source Id"}, description = "Validates transaction authentication with an invalid source ID", priority = 144)
+    public void transactionAuthenticationInvalidSourceIdCase() {
+
+        TransactionRequest transactionRequest = AppUtils.transactionRequestInstance();
+        transactionRequest.getSource().setId("invalid_source_id");
+
+        String body = CommonAutomationUtils.stringToJson(transactionRequest);
+        Response response = AuthenticationTransactionRequest.postRequest(body, AppConstants.INTERNAL_END_POINT);
+        String textResponse = response.getBody().asString();
+        JsonNode jsonResponse = CommonAutomationUtils.convertToJson(textResponse);
+
+        CommonAutomationUtils.verifyCommonResponseFailedDescriptionValidation(jsonResponse, response.getStatusCode(), HttpStatus.SC_BAD_REQUEST, AppConstants.INVALID_TOKEN_ID_CODE, AppConstants.INVALID_TOKEN_ID_DESCRIPTION);
+    }
+
+    @Test(groups = {"MC:Authentication", "Abdul Rehman", "SECTION:Source Card First Six Validation", "SC:Source Card First Six"}, description = "Validates transaction authentication with a valid source card first six digits", priority = 145)
+    public void transactionAuthenticationValidSourceCardFirstSixCase() {
+
+        TransactionRequest transactionRequest = AppUtils.transactionRequestInstance();
+        transactionRequest.getSource().getCard().setFirstSix("484783");
+
+        String body = CommonAutomationUtils.stringToJson(transactionRequest);
+        Response response = AuthenticationTransactionRequest.postRequest(body, AppConstants.INTERNAL_END_POINT);
+
+        CommonAutomationUtils.verifyCommonResponseSuccessValidation(response, HttpStatus.SC_OK, Map.of(AppConstants.CARD + "." + AppConstants.FIRST_SIX, "484783"));
+    }
+
+    @Test(groups = {"MC:Authentication", "Abdul Rehman", "SECTION:Source Card First Six Validation", "SC:Source Card First Six"}, description = "Validates transaction authentication with less than six digits in source card first six", priority = 146)
+    public void transactionAuthenticationLessSixDigitSourceCardFirstSixCase() {
+
+        TransactionRequest transactionRequest = AppUtils.transactionRequestInstance();
+        transactionRequest.getSource().getCard().setFirstSix("4847");
+
+        String body = CommonAutomationUtils.stringToJson(transactionRequest);
+        Response response = AuthenticationTransactionRequest.postRequest(body, AppConstants.INTERNAL_END_POINT);
+
+        CommonAutomationUtils.verifyCommonResponseSuccessValidation(response, HttpStatus.SC_OK, Map.of(AppConstants.CARD + "." + AppConstants.FIRST_SIX, "4847"));
+    }
+
 //    @Test(groups = {"MC:Authentication", "Abdul Rehman", "SECTION:Source Card First Six Validation", "SC:Source Card First Six"}, description = "Validates transaction authentication with string value in source card first six digits", priority = 147)
 //    public void transactionAuthenticationStringSourceCardFirstSixCase() {
 //

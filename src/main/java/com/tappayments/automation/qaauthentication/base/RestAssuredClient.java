@@ -1,13 +1,12 @@
 package com.tappayments.automation.qaauthentication.base;
 
+import com.tappayments.automation.qaauthentication.App;
 import com.tappayments.automation.qaauthentication.config.ConfigManager;
 import com.tappayments.automation.config.ExtentReportManager;
 import com.tappayments.automation.qaauthentication.model.CardRequest;
 import com.tappayments.automation.qaauthentication.utils.AppConstants;
 import com.tappayments.automation.qaauthentication.utils.AppUtils;
 import com.tappayments.automation.utils.CommonAutomationUtils;
-import io.restassured.http.Header;
-import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import io.restassured.specification.QueryableRequestSpecification;
 import io.restassured.specification.RequestSpecification;
@@ -46,9 +45,11 @@ public class RestAssuredClient extends BaseTest {
                 AppConstants.SESSION_TOKEN, sessionToken);
 
         RequestSpecification requestSpecification = requestSpecification(headers);
+
         Response response = requestSpecification.body(body)
                 .when()
                 .post(endPoint);
+
 
         printRequestLogInReport(requestSpecification);
         printResponseLogInReport(response);
@@ -56,7 +57,21 @@ public class RestAssuredClient extends BaseTest {
         return response;
     }
 
-    private static String generateSessionToken(String key){
+    public static Response postMethodResponseHeaders(Map<String, String> headers,
+                                                            String payloadJson,
+                                                            String endpoint){
+
+        RequestSpecification requestSpecification = requestSpecification(headers);
+
+        Response response = requestSpecification
+                .body(payloadJson)
+                .when()
+                .post(endpoint);
+
+        return response;
+    }
+
+    public static String generateSessionToken(String key){
 
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("key", key);
@@ -93,9 +108,14 @@ public class RestAssuredClient extends BaseTest {
         ExtentReportManager.logJson(response.getBody().prettyPrint());
     }
 
-    public static String generateCardDetailToken(){
+    public static String generateCardDetailToken() {
 
         CardRequest cardRequest = AppUtils.createCardRequest();
+        return generateCardDetailToken(cardRequest);
+    }
+
+    public static String generateCardDetailToken(CardRequest cardRequest){
+
         String body = CommonAutomationUtils.stringToJson(cardRequest);
 
         RequestSpecification requestSpecification = requestSpecification(
@@ -107,7 +127,7 @@ public class RestAssuredClient extends BaseTest {
 
         Response response = requestSpecification.body(body)
                 .when()
-                .post(ConfigManager.getPropertyValue(AppConstants.CARD_DETAIL_TOKEN_URI));
+                .post(ConfigManager.getPropertyValue(AppConstants.TAP_BASE_URI) + AppConstants.CARD_DETAIL_TOKEN_URI);
 
         if(response.getStatusCode() == HttpStatus.SC_OK)
             return response.jsonPath().getString(AppConstants.ID);
@@ -122,4 +142,5 @@ public class RestAssuredClient extends BaseTest {
         System.out.println("Retrying the request");
         return generateCardDetailToken();  // Retry the request
     }
+
 }

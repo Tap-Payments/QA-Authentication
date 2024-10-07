@@ -2,6 +2,8 @@ package com.tappayments.automation.qaauthentication.utils;
 
 import com.tappayments.automation.qaauthentication.config.ConfigManager;
 import com.tappayments.automation.qaauthentication.model.CardRequest;
+import com.tappayments.automation.qaauthentication.model.ChargeRequest;
+import com.tappayments.automation.qaauthentication.model.TransactionAuthentication;
 import com.tappayments.automation.qaauthentication.model.TransactionRequest;
 import com.tappayments.automation.qaauthentication.model.enums.AuthenticationChannel;
 import com.tappayments.automation.qaauthentication.model.enums.AuthenticationPurpose;
@@ -122,6 +124,57 @@ public class AppUtils {
                         .build())
                 .client_ip("192.168.1.20")
                 .build();
+    }
+
+    public static ChargeRequest chargeRequestInstance(){
+
+        return ChargeRequest.builder()
+                .authentication(ChargeRequest.Authentication.builder()
+                        .id("auth_123456")
+                        .build())
+                .amount(10.00)
+                .currency("KWD")
+                .customerInitiated(true)
+                .threeDSecure(true)
+                .saveCard(false)
+                .description("Test Description")
+                .metadata(Map.of("udf1", "Metadata 1"))
+                .reference(ChargeRequest.Reference.builder()
+                        .transaction("txn_01")
+                        .order("ord_01")
+                        .build())
+                .receipt(ChargeRequest.Receipt.builder()
+                        .email(true)
+                        .sms(true)
+                        .build())
+                .customer(TransactionRequest.Customer.builder()
+                        .name(List.of(TransactionRequest.Customer.Name.builder()
+                                .firstName("test")
+                                .middleName("test")
+                                .lastName("test")
+                                .locale("en")
+                                .build()))
+                        .nameOnCard("")
+                        .email("test@test.com")
+                        .phone(TransactionRequest.Customer.Phone.builder()
+                                .countryCode("965")
+                                .number("50000000")
+                                .build())
+                        .build())
+                .merchant(TransactionRequest.Merchant.builder()
+                        .id("1124340")
+                        .build())
+                .source(ChargeRequest.Source.builder()
+                        .id("src_123456")
+                        .build())
+                .redirect(TransactionRequest.Redirect.builder()
+                        .url("http://yourwebsite.com/redirect_url")
+                        .build())
+                .post(TransactionRequest.Post.builder()
+                        .url("http://yourwebsite.com/post_url")
+                        .build())
+                .build();
+
     }
 
     public static void updateSourceAndMerchantIdForExternal(TransactionRequest transactionRequest){
